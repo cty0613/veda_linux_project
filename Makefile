@@ -12,7 +12,7 @@ TARGETS = $(patsubst %, lib%.so, $(SUBDIRS))
 all: $(TARGETS)
 
 server:	
-	$(CC) -o server server_new.c -lwiringPi
+	$(CC) -o server server.c -lwiringPi -pthread
 
 # 각 라이브러리 생성 규칙
 lib%.so:

@@ -19,15 +19,18 @@ void *send_thread(void *arg) {
         if (!fgets(sendbuf, BUF_SIZE, stdin)) {
             break;  // EOF거나 에러면 종료
         }
+
         // 2) 개행문자 제거
         size_t len = strlen(sendbuf);
         if (len > 0 && sendbuf[len-1] == '\n') {
             sendbuf[len-1] = '\0';
         }
+
         // 3) "exit" 입력 시 루프 탈출
         if (strcmp(sendbuf, "exit") == 0) {
             break;
         }
+        
         // 4) 서버로 전송
         if (write(sockfd, sendbuf, strlen(sendbuf)) < 0) {
             perror("write 실패");
