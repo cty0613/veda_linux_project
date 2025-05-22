@@ -14,6 +14,8 @@
 #include <stdarg.h>
 #include <fcntl.h>
 
+#include "http_server.h"
+
 #define PORT 9081
 #define BACKLOG 10              // 최대 대기 큐 길이
 #define LOG_FILE "server.log"   // 로그 파일 경로
@@ -23,7 +25,8 @@ pthread_mutex_t map_mutex = PTHREAD_MUTEX_INITIALIZER;  // 맵 접근용 뮤텍�
 
 // 함수 실행 파리미터 전달용 DTO
 typedef struct {
-    int     clinet_socket;  // 클라리언트 소켓
+    int     client_socket;  // 클라리언트 소켓
+    char    client_ip[INET_ADDRSTRLEN];
     char    libname[256];  // 로드할 라이브러리 이름
     char    funcname[256]; // 호출할 함수 이름
     int     arg;            // 호출 함수에 전달할 정수 인자
@@ -38,6 +41,11 @@ typedef struct func_mutex_node {
 
 // 함수별 뮤텍스 노드의 헤드 (연결리스트)
 func_mutex_node *mutex_list_head = NULL;
+
+typedef struct client_info_dto {
+    int  client_socket;                     // 소켓 디스크립터
+    char client_ip[INET_ADDRSTRLEN];    // 클라이언트 IP 문자열
+} client_info_dto;
 
 // 호출되는 함수에 대응되는 뮤텍스 포인터를 반환하는 함수
 pthread_mutex_t *get_func_mutex(const char *funcname){
@@ -70,7 +78,6 @@ pthread_mutex_t *get_func_mutex(const char *funcname){
     return m;
     
 }
-
 // 로그 기록용 함수
 void LOG(const char *format, ...) {
     pthread_mutex_lock(&log_mutex);                  // 로그 기록 전 락 획득
@@ -107,10 +114,8 @@ void* func_thread(void *arg){
     pthread_mutex_t *fmutex = get_func_mutex(req->funcname);
     pthread_mutex_lock(fmutex); // 이미 실행중이면 여기서 블락
 
-
-
-    LOG("REQUEST from socket %d: lib=%s, func=%s, arg=%d",
-              req->clinet_socket, req->libname, req->funcname, req->arg);
+    LOG("REQUEST from %s: lib=%s, func=%s, arg=%d",
+              req->client_ip, req->libname, req->funcname, req->arg);
 
     // 동적 라이브러리 로드 "./lib<name>.so"
     char libpath[512];
@@ -121,7 +126,7 @@ void* func_thread(void *arg){
         char errmsg[BUFSIZ];
         snprintf(errmsg, sizeof(errmsg), "dlopen error: %s", dlerror());
         LOG("ERROR: %s", errmsg);
-        dprintf(req->clinet_socket, "ERROR: cannot load dlib %s\n", req->libname);
+        dprintf(req->client_socket, "ERROR: cannot load dlib %s\n", req->libname);
         goto cleanup;
     }
 
@@ -132,7 +137,7 @@ void* func_thread(void *arg){
     char *dlsym_err = dlerror();
     if(dlsym_err) {
         LOG("ERROR: dlsym error: %s", dlsym_err);
-        dprintf(req->clinet_socket, "ERROR: no func symbol at dlib, %s\n", req->funcname);
+        dprintf(req->client_socket, "ERROR: no func symbol at dlib, %s\n", req->funcname);
         dlclose(handle);
         goto cleanup;
     }
@@ -141,8 +146,8 @@ void* func_thread(void *arg){
     int result = func(req->arg);
 
     // 클라이언트에 함수 결과 응답 전송
-    LOG("RESPONSE to socket %d: %d", req->clinet_socket, result);
-    dprintf(req->clinet_socket, "RESULT: %d\n", result);
+    LOG("RESPONSE to %s: %d", req->client_ip, result);
+    dprintf(req->client_socket, "RESULT: %d\n", result);
 
     dlclose(handle);
 
@@ -153,7 +158,10 @@ void* func_thread(void *arg){
 }
 
 void* client_thread(void *arg){
-    int client_socket = *(int*)arg; // 전달받은 클라이언트 소켓
+    client_info_dto *c_info = (client_info_dto *)arg; // 전달받은 클라이언트 소켓
+    int client_socket = c_info->client_socket;
+    char client_ip[INET_ADDRSTRLEN];
+    strcpy(client_ip, c_info->client_ip);
     free(arg);                      // 전달할때 사용한 포인터 해제
 
     char buf[BUFSIZ];
@@ -175,10 +183,11 @@ void* client_thread(void *arg){
 
         // 함수 실행용 스레드에 전달할 구조체 및 변수 준비
         func_req_dto *req = malloc(sizeof(func_req_dto));
+        strcpy(req->client_ip, client_ip);
         strcpy(req->libname, libname);
         strcpy(req->funcname, funcname);
         req->arg = atoi(argstr);
-        req->clinet_socket = client_socket;
+        req->client_socket = client_socket;
         
         // 함수 실행용 스레드 생성
         pthread_t tid;
@@ -187,14 +196,12 @@ void* client_thread(void *arg){
     }
 
     close(client_socket);
-    LOG("Disconnected client from %d", client_socket);
+    LOG("Disconnected client %s", client_ip);
     return NULL;
 }
 
-int serverSetup() {
+int server_setup() {
     struct sockaddr_in server_addr; // 서버 및 클라이언트 주소 설정 구조체
-    socklen_t client_len;                        
-    char msg_buffer[BUFSIZ];
     
     // 1. 서버 소켓 생성 (IPv4, TCP)
     int server_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -221,30 +228,44 @@ int serverSetup() {
         exit(1);
     }
 
-    printf("%d 포트에서 서버 설정 완료... 대기중\n", PORT);
+    printf("TCP Remote Server listening on port %d \n", PORT);
     
     while(1) {
         struct sockaddr_in client_addr;
         socklen_t client_len = sizeof(client_addr);
-        int *client_sock = malloc(sizeof(int));
-        *client_sock = accept(server_sock, (struct sockaddr*)&client_addr, &client_len);
-        if (*client_sock < 0) {
+        
+        int client_sock = accept(server_sock, (struct sockaddr*)&client_addr, &client_len);
+        if (client_sock < 0) {
             perror("cliend accept error");
-            free(client_sock);
             continue;
         }
 
+        client_info_dto *c_i = malloc(sizeof(c_i));
+        c_i->client_socket = client_sock;
+        strcpy(c_i->client_ip, inet_ntoa(client_addr.sin_addr));
+
         pthread_t tid;
-        pthread_create(&tid, NULL, client_thread, client_sock);
+        pthread_create(&tid, NULL, client_thread, c_i);
         pthread_detach(tid);
     }
+
     close(server_sock);
-    
 }
 
 int main() {
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+    if (pid == 0) {
+        execl("./http_server", "http_server", NULL);
+        perror("execl 실패"); 
+        _exit(0);  // 함수 리턴 후 자식만 종료
+    }
+    printf("HTTP Server Launched on PID: %d\n", pid);
     wiringPiSetup();
-    serverSetup();
-    
+    server_setup();
+
     return 0;
 }

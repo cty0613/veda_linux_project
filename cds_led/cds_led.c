@@ -4,7 +4,7 @@
 #define CDS 	5 	/* GPIO18 */
 #define LED 	4 	/* GPIO18 */
 
-int cdsControl(int) {
+int cdsCtrl(int) {
     pinMode(CDS, INPUT); 	/* Pin 모드를 입력으로 설정 */
     pinMode(LED, OUTPUT); 	/* Pin 모드를 출력으로 설정 */
 
@@ -24,14 +24,3 @@ int cdsRead(int) {
     pinMode(CDS, INPUT); 	/* Pin 모드를 입력으로 설정 */
     return digitalRead(CDS);
 }
-
-// int main( )
-// {
-//     wiringPiSetup();
-//     while(1) {
-//         int value = cdsControl(); 		/* 조도 센서 사용을 위한 함수 호출 */
-//         printf("LIGHT DETECTION : %d\n", value);
-//     }
-    
-//     return 0;
-// }

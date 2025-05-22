@@ -1,0 +1,112 @@
+[2025-05-22 11:12:02] REQUEST from socket 5: lib=led_pwm, func=ledPwmCtrl, arg=3
+[2025-05-22 11:12:02] RESPONSE to socket 5: 0
+[2025-05-22 11:12:09] REQUEST from socket 5: lib=led_pwm, func=ledPwmCtrl, arg=1
+[2025-05-22 11:12:09] RESPONSE to socket 5: 0
+[2025-05-22 11:12:22] REQUEST from socket 5: lib=buzzer_music, func=musicPlay, arg=2
+[2025-05-22 11:12:29] RESPONSE to socket 5: 0
+[2025-05-22 11:13:53] REQUEST from socket 5: lib=buzzer_music, func=musicPlay, arg=2
+[2025-05-22 11:13:54] REQUEST from socket 6: lib=7seg_fnd, func=countDown, arg=3
+[2025-05-22 11:13:58] RESPONSE to socket 6: 0
+[2025-05-22 11:14:00] RESPONSE to socket 5: 0
+[2025-05-22 11:17:10] REQUEST from socket 6: lib=buzzer_music, func=play, arg=1
+[2025-05-22 11:17:12] REQUEST from socket 5: lib=7seg_fnd, func=countdown, arg=3
+[2025-05-22 11:17:17] RESPONSE to socket 5: 0
+[2025-05-22 11:17:19] RESPONSE to socket 6: 0
+[2025-05-22 11:18:13] REQUEST from socket 6: lib=buzzer_music, func=play, arg=1
+[2025-05-22 11:18:21] RESPONSE to socket 6: 0
+[2025-05-22 11:20:55] REQUEST from socket 6: lib=buzzer_music, func=play, arg=1
+[2025-05-22 11:21:04] RESPONSE to socket 6: 0
+[2025-05-22 11:22:29] REQUEST from socket 6: lib=buzzer_music, func=play, arg=1
+[2025-05-22 11:22:38] RESPONSE to socket 6: 0
+[2025-05-22 11:23:28] REQUEST from socket 6: lib=buzzer_music, func=play, arg=1
+[2025-05-22 11:23:37] RESPONSE to socket 6: 0
+[2025-05-22 11:43:21] REQUEST from socket 6: lib=buzzer_music, func=play, arg=2
+[2025-05-22 11:43:26] RESPONSE to socket 6: 0
+[2025-05-22 11:45:18] REQUEST from socket 6: lib=buzzer_music, func=play, arg=2
+[2025-05-22 11:45:21] RESPONSE to socket 6: 0
+[2025-05-22 11:45:34] REQUEST from socket 6: lib=buzzer_music, func=play, arg=2
+[2025-05-22 11:45:37] RESPONSE to socket 6: 0
+[2025-05-22 11:46:01] REQUEST from socket 6: lib=DLY_8,, func=DLY_16,, arg=0
+[2025-05-22 11:46:01] ERROR: dlopen error: ./libDLY_8,.so: cannot open shared object file: No such file or directory
+[2025-05-22 11:46:01] REQUEST from socket 6: lib=DLY_16,, func=DLY_16,, arg=0
+[2025-05-22 11:46:01] ERROR: dlopen error: ./libDLY_16,.so: cannot open shared object file: No such file or directory
+[2025-05-22 11:46:07] REQUEST from socket 6: lib=DLY_16,, func=DLY_16,, arg=0
+[2025-05-22 11:46:07] ERROR: dlopen error: ./libDLY_16,.so: cannot open shared object file: No such file or directory
+[2025-05-22 11:46:16] REQUEST from socket 6: lib=buzzer_music, func=play, arg=2
+[2025-05-22 11:46:19] RESPONSE to socket 6: 0
+[2025-05-22 11:46:44] REQUEST from socket 6: lib=buzzer_music, func=play, arg=2
+[2025-05-22 11:46:50] RESPONSE to socket 6: 0
+[2025-05-22 11:54:16] REQUEST from socket 6: lib=buzzer_music, func=play, arg=2
+[2025-05-22 11:54:23] RESPONSE to socket 6: 0
+[2025-05-22 12:22:38] Disconnected client from 6
+[2025-05-22 12:22:39] Disconnected client from 5
+[2025-05-22 12:23:31] REQUEST from : lib=buzzer_music, func=play, arg=2
+[2025-05-22 12:23:37] RESPONSE to : 0
+[2025-05-22 13:16:24] Disconnected client 
+[2025-05-22 13:17:17] REQUEST from : lib=led_pwm, func=ledCtrl, arg=3
+[2025-05-22 13:17:17] RESPONSE to : 0
+[2025-05-22 13:21:22] REQUEST from : lib=buzzer_music, func=play, arg=0
+[2025-05-22 13:21:29] Disconnected client 
+[2025-05-22 13:23:19] REQUEST from : lib=buzzer_music, func=play, arg=2
+[2025-05-22 13:23:26] RESPONSE to : 0
+[2025-05-22 13:23:52] REQUEST from : lib=buzzer_music, func=play, arg=1
+[2025-05-22 13:24:00] RESPONSE to : 0
+[2025-05-22 14:03:54] Disconnected client 
+[2025-05-22 14:06:11] REQUEST from : lib=led_pwm, func=ledCtrl, arg=0
+[2025-05-22 14:06:11] RESPONSE to : 0
+[2025-05-22 14:06:21] REQUEST from : lib=led_pwm, func=ledCtrl, arg=3
+[2025-05-22 14:06:21] RESPONSE to : 0
+[2025-05-22 14:08:29] Disconnected client 192.168.0.35
+[2025-05-22 14:10:04] REQUEST from 192.168.0.35: lib=led_pwm, func=ledCtrl, arg=0
+[2025-05-22 14:10:04] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:10:12] REQUEST from 192.168.0.35: lib=led_pwm, func=ledCtrl, arg=1
+[2025-05-22 14:10:12] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:10:56] REQUEST from 192.168.0.35: lib=cds_led, func=cdsCtrl, arg=0
+[2025-05-22 14:11:09] REQUEST from 192.168.0.35: lib=cds_led, func=cdsRead, arg=0
+[2025-05-22 14:11:09] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:11:26] REQUEST from 192.168.0.35: lib=7seg_fnd, func=countdown, arg=3
+[2025-05-22 14:11:31] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:30:35] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=0
+[2025-05-22 14:30:43] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:30:56] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=0
+[2025-05-22 14:31:03] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:31:24] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=0
+[2025-05-22 14:31:31] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:33:24] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=0
+[2025-05-22 14:33:30] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:34:03] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=0
+[2025-05-22 14:34:09] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:35:12] REQUEST from 192.168.0.35: lib=7seg_fnd, func=countdown, arg=3
+[2025-05-22 14:35:17] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:35:47] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=2
+[2025-05-22 14:35:54] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:48:22] REQUEST from 192.168.0.35: lib=cds_led, func=cdsRead, arg=0
+[2025-05-22 14:48:22] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:48:37] REQUEST from 192.168.0.35: lib=cds_led, func=cdsRead, arg=0
+[2025-05-22 14:48:37] RESPONSE to 192.168.0.35: 1
+[2025-05-22 14:48:40] REQUEST from 192.168.0.35: lib=cds_led, func=cdsRead, arg=0
+[2025-05-22 14:48:40] RESPONSE to 192.168.0.35: 0
+[2025-05-22 14:59:55] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 14:59:55] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 14:59:55] Disconnected client 192.168.0.35
+[2025-05-22 14:59:56] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 14:59:56] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 14:59:56] Disconnected client 192.168.0.35
+[2025-05-22 15:00:01] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 15:00:01] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 15:00:01] Disconnected client 192.168.0.35
+[2025-05-22 15:00:31] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 15:00:31] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 15:00:31] Disconnected client 192.168.0.35
+[2025-05-22 15:00:35] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 15:00:35] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 15:00:35] Disconnected client 192.168.0.35
+[2025-05-22 15:00:36] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 15:00:36] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 15:00:36] Disconnected client 192.168.0.35
+[2025-05-22 15:00:41] REQUEST from 192.168.0.35: lib=GET, func=/, arg=0
+[2025-05-22 15:00:41] ERROR: dlopen error: ./libGET.so: cannot open shared object file: No such file or directory
+[2025-05-22 15:00:41] Disconnected client 192.168.0.35
+[2025-05-22 15:02:46] Disconnected client 192.168.0.35
+[2025-05-22 16:04:18] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=2
+[2025-05-22 16:04:25] RESPONSE to 192.168.0.35: 0

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Server Log Viewer</title>
+  <style>
+    body { font-family: monospace; padding: 1rem; }
+    #log { background: #f4f4f4; padding: 1rem; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>cty0613 Server Log</h1>
+  <pre style = "height: 80vh; overflow-y: scroll;"id="log">Loading...</pre>
+
+  <script>
+    // 로그를 fetch하여 <pre>에 업데이트
+    async function loadLog() {
+      try {
+        const res = await fetch('/server.log');       // /server.log 요청
+        if (!res.ok) throw new Error(res.statusText);
+        const text = await res.text();                // 응답 텍스트 추출
+        document.getElementById('log').textContent = text;
+      } catch (e) {
+        document.getElementById('log').textContent = 'Error: ' + e;
+      }
+    }
+
+    loadLog();                                       // 초기 로드
+    setInterval(loadLog, 5000);                      // 5초마다 갱신
+  </script>
+</body>
+</html>

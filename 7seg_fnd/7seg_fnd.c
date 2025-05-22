@@ -54,7 +54,7 @@ void clearDisplay() {
 }
 
 // start부터 0까지 카운트다운하며 1초마다 표시
-int countDown(int start) {
+int countdown(int start) {
     initFND();                                 // GPIO/스피커 초기화
     if (start < 0 || start > 9) {             // 유효 범위 체크
         printf("0~9 사이의 숫자를 입력해야 해\n");
@@ -70,7 +70,7 @@ int countDown(int start) {
             pthread_mutex_lock(&gpio_mutex);   // 뮤텍스 잠금
             // 0이 되면 스피커로 알람음 출력 (뮤텍스로 보호)
             softToneWrite(spkr, 440);         // 440Hz 알람음
-            delay(200);                       // 0.2초 대기
+            delay(400);                       // 0.2초 대기
 
             // 스피커 핀 입력 모드로 전환 (무음)
             // pinMode(spkr, INPUT);             // 스피커 핀 입력 모드
@@ -86,9 +86,3 @@ int countDown(int start) {
     return 0;
 }
 
-// main 함수 예시
-// int main() {
-//     int startNum = 7;       // 시작 숫자 설정
-//     countDown(startNum);    // 카운트다운 실행
-//     return 0;               // 정상 종료
-// }

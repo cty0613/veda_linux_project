@@ -14,7 +14,7 @@ void initPWM() {
 
 }
 
-int ledPwmCtrl(int brightness) {
+int ledCtrl(int brightness) {
     initPWM();
     if (brightness == 2 ) { // NORMAL BRIGHTNESS
         pwmWrite(LED_PIN, 300);               // 30% 밝기
@@ -34,8 +34,3 @@ int ledPwmCtrl(int brightness) {
         return 0;
     }   
 }
-
-// int main() {
-//     ledPwmCtrl(3);
-//     return 0;
-// }
