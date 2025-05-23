@@ -140,3 +140,25 @@
 [2025-05-23 13:03:40] RESPONSE to 192.168.0.35: 0
 [2025-05-23 13:03:50] REQUEST from 192.168.0.35: lib=7seg_fnd, func=countdown, arg=5
 [2025-05-23 13:03:56] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:05:37] Disconnected client 192.168.0.35
+[2025-05-23 15:05:57] Disconnected client 192.168.0.35
+[2025-05-23 15:11:30] REQUEST from 192.168.0.35: lib=led_pwm, func=ledCtrl, arg=0
+[2025-05-23 15:11:30] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:11:36] REQUEST from 192.168.0.35: lib=led_pwm, func=ledCtrl, arg=1
+[2025-05-23 15:11:36] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:11:41] REQUEST from 192.168.0.35: lib=led_pwm, func=ledCtrl, arg=2
+[2025-05-23 15:11:41] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:11:52] REQUEST from 192.168.0.35: lib=cds_led, func=cdsRead, arg=0
+[2025-05-23 15:11:52] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:12:01] REQUEST from 192.168.0.35: lib=cds_led, func=cdsRead, arg=1
+[2025-05-23 15:12:01] RESPONSE to 192.168.0.35: 1
+[2025-05-23 15:12:08] REQUEST from 192.168.0.35: lib=cds_led, func=cdsCtrl, arg=0
+[2025-05-23 15:12:19] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=0
+[2025-05-23 15:12:26] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:13:04] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=1
+[2025-05-23 15:13:13] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:13:19] REQUEST from 192.168.0.35: lib=buzzer_music, func=play, arg=2
+[2025-05-23 15:13:26] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:13:33] REQUEST from 192.168.0.35: lib=7seg_fnd, func=countdown, arg=5
+[2025-05-23 15:13:40] RESPONSE to 192.168.0.35: 0
+[2025-05-23 15:13:49] Disconnected client 192.168.0.35

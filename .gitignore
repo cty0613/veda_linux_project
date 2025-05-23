@@ -2,7 +2,4 @@
 *.o
 */*.o
 
-server
-client
-http_server
 *.log
