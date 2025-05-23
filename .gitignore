@@ -5,3 +5,4 @@
 server
 client
 http_server
+*.log

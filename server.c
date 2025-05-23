@@ -128,7 +128,9 @@ void* func_thread(void *arg){
         snprintf(errmsg, sizeof(errmsg), "dlopen error: %s", dlerror());
         LOG("ERROR: %s", errmsg);
         dprintf(req->client_socket, "ERROR: cannot load dlib %s\n", req->libname);
-        goto cleanup;
+        pthread_mutex_unlock(fmutex);
+        free(req);
+        return NULL;
     }
 
     // 동적 라이브러리 내 함수 심볼 조회
@@ -140,7 +142,9 @@ void* func_thread(void *arg){
         LOG("ERROR: dlsym error: %s", dlsym_err);
         dprintf(req->client_socket, "ERROR: no func symbol at dlib, %s\n", req->funcname);
         dlclose(handle);
-        goto cleanup;
+        pthread_mutex_unlock(fmutex);
+        free(req);
+        return NULL;
     }
 
     // 로드한 함수 실행 (스레드 내부에서)
@@ -152,10 +156,8 @@ void* func_thread(void *arg){
 
     dlclose(handle);
 
-    cleanup:
-        pthread_mutex_unlock(fmutex);
-        free(req);
-        return NULL;
+    return NULL;
+        
 }
 
 void* client_thread(void *arg){
