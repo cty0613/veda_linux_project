@@ -27,10 +27,10 @@ static pthread_mutex_t gpio_mutex = PTHREAD_MUTEX_INITIALIZER;  // GPIO/스피�
 
 // GPIO 및 스피커 초기화: wiringPi 모드 설정 및 핀 모드 출력으로 설정
 void initFND() {
-    wiringPiSetup();               // wiringPi 모드 설정
-    softToneCreate(spkr);          // 스피커 톤 출력을 위한 설정
+    wiringPiSetup();                    // wiringPi 모드 설정
+    softToneCreate(spkr);               // 스피커 톤 출력을 위한 설정
     for (int i = 0; i < 4; i++) {
-        pinMode(gpiopins[i], OUTPUT);  // 각 BCD 입력 핀을 출력 모드로 설정
+        pinMode(gpiopins[i], OUTPUT);   // 각 BCD 입력 핀을 출력 모드로 설정
     }
 }
 
@@ -46,17 +46,17 @@ void displayNumber(int num) {
 
 // 7세그먼트 표시를 초기화(OFF) 처리 (뮤텍스로 보호)
 void clearDisplay() {
-    pthread_mutex_lock(&gpio_mutex);          // 뮤텍스 잠금
+    pthread_mutex_lock(&gpio_mutex);           // 뮤텍스 잠금
     for (int i = 0; i < 4; i++) {
-        digitalWrite(gpiopins[i], HIGH);     // 모든 비트를 HIGH(OFF)로 설정
+        digitalWrite(gpiopins[i], HIGH);       // 모든 비트를 HIGH(OFF)로 설정
     }
-    pthread_mutex_unlock(&gpio_mutex);        // 뮤텍스 해제
+    pthread_mutex_unlock(&gpio_mutex);         // 뮤텍스 해제
 }
 
 // start부터 0까지 카운트다운하며 1초마다 표시
 int countdown(int start) {
     initFND();                                 // GPIO/스피커 초기화
-    if (start < 0 || start > 9) {             // 유효 범위 체크
+    if (start < 0 || start > 9) {              // 유효 범위 체크
         printf("0~9 사이의 숫자를 입력해야 해\n");
         return 0;
     }
@@ -69,11 +69,10 @@ int countdown(int start) {
         if (current == 0) {
             pthread_mutex_lock(&gpio_mutex);   // 뮤텍스 잠금
             // 0이 되면 스피커로 알람음 출력 (뮤텍스로 보호)
-            softToneWrite(spkr, 440);         // 440Hz 알람음
-            delay(400);                       // 0.2초 대기
+            softToneWrite(spkr, 440);          // 440Hz 알람음
+            delay(400);                        // 0.2초 대기
 
             // 스피커 핀 입력 모드로 전환 (무음)
-            // pinMode(spkr, INPUT);             // 스피커 핀 입력 모드
             softToneWrite(spkr, 0);
             pthread_mutex_unlock(&gpio_mutex); // 뮤텍스 해제
         }

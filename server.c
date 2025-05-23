@@ -78,6 +78,7 @@ pthread_mutex_t *get_func_mutex(const char *funcname){
     return m;
     
 }
+
 // 로그 기록용 함수
 void LOG(const char *format, ...) {
     pthread_mutex_lock(&log_mutex);                  // 로그 기록 전 락 획득
@@ -95,7 +96,7 @@ void LOG(const char *format, ...) {
     char timebuf[64];
     strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S", &tm_now);
 
-    // 시간 찍고 나머지 메시지 출력
+    // 타임스탬프 + 메시지 출력
     fprintf(fp, "[%s] ", timebuf);
     va_list args;
     va_start(args, format);
@@ -110,7 +111,7 @@ void LOG(const char *format, ...) {
 void* func_thread(void *arg){
     func_req_dto *req = (func_req_dto *)arg;
 
-    // 요청한 함수에 대한 뮤텍스 획득 & 잠금 (같은 함수 요청끼리만 직렬화)
+    // 요청한 함수에 대한 뮤텍스 획득 & 잠금 (같은 함수 요청은 블락)
     pthread_mutex_t *fmutex = get_func_mutex(req->funcname);
     pthread_mutex_lock(fmutex); // 이미 실행중이면 여기서 블락
 
@@ -162,7 +163,7 @@ void* client_thread(void *arg){
     int client_socket = c_info->client_socket;
     char client_ip[INET_ADDRSTRLEN];
     strcpy(client_ip, c_info->client_ip);
-    free(arg);                      // 전달할때 사용한 포인터 해제
+    free(arg);                                       // 스레드에 전달(arg 인수)용 포인터 해제
 
     char buf[BUFSIZ];
     ssize_t n;
@@ -230,6 +231,7 @@ int server_setup() {
 
     printf("TCP Remote Server listening on port %d \n", PORT);
     
+    // 5. 무한 루프로 요청(accept) 처리
     while(1) {
         struct sockaddr_in client_addr;
         socklen_t client_len = sizeof(client_addr);
@@ -258,14 +260,15 @@ int main() {
         perror("fork");
         exit(EXIT_FAILURE);
     }
-    if (pid == 0) {
+    if (pid == 0) { // http 서버 실행
         execl("./http_server", "http_server", NULL);
         perror("execl 실패"); 
         _exit(0);  // 함수 리턴 후 자식만 종료
     }
     printf("HTTP Server Launched on PID: %d\n", pid);
-    wiringPiSetup();
-    server_setup();
+
+    wiringPiSetup(); 
+    server_setup(); // tcp 서버 실행
 
     return 0;
 }

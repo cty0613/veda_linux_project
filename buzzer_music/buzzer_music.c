@@ -34,10 +34,10 @@
 #define W1 1200 // 1 
 
 #define DLY_1 16 // 온음표
-#define DLY_2 8 // 2분음표
-#define DLY_4 4 // 4분음표
+#define DLY_2 8  // 2분음표
+#define DLY_4 4  // 4분음표
 #define DLY_4d 6 // 4 점 분음표
-#define DLY_8 2 // 8분음표
+#define DLY_8 2  // 8분음표
 #define DLY_8d 3 // 8 점 분음표
 #define DLY_16 1 // 16분음표
 
@@ -45,7 +45,6 @@
 #define NOTE_UNIT_MS (60000 / BPM / 4)        // 16분음표(ms) = (1분=60000ms ÷ BPM) ÷ 4
 
 #define SPKR_PIN 	26 	/* GPIO25 */
-#define TOTAL 	32 	/* 학교종의 전체 계이름의 수 */
 
 // 뮤텍스 전역 선언 및 초기화
 static pthread_mutex_t tone_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -148,7 +147,7 @@ int play(int music_sel) {
             softToneWrite(SPKR_PIN, freq);                   // 주파수 또는 무음 출력
             pthread_mutex_unlock(&tone_mutex);               // 뮤텍스 해제
 
-            delay(sng3_length[i] * NOTE_UNIT_MS/1.5);            // 음 길이만큼 대기
+            delay(sng3_length[i] * NOTE_UNIT_MS/1.5);        // 음 길이만큼 대기
 
             // 음 끝난 뒤 무음으로 리셋
             pthread_mutex_lock(&tone_mutex);                 // 뮤텍스 잠금
