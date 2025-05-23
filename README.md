@@ -41,6 +41,8 @@ Linux/UNIX
 
 ## 프로젝트 빌드 및 실행
 
+!! 라이브리러 및 서버 프로그램 빌드 시 wiringPi가 설치되어있어야 함!
+
 1. 서버 프로그램 빌드
     ```makefile
     make server http_server
