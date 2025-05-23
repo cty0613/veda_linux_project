@@ -63,7 +63,7 @@ Linux/UNIX
         bash start_service.sh
         ```
 
-    -  클라이언트 실행 (네트워크 상 다른 기기에서)
+    -  클라이언트 실행 (로컬 네트워크 상 다른 기기에서)
         ```bash
         ./client
         ```
